@@ -1,0 +1,87 @@
+Server [localhost]:
+Database [postgres]:
+Port [5432]:
+Username [postgres]:
+Password for user postgres:
+psql (12.10)
+WARNING: Console code page (437) differs from Windows code page (1252)
+         8-bit characters might not work correctly. See psql reference
+         page "Notes for Windows users" for details.
+Type "help" for help.
+
+postgres=# SELECT version();
+                           version
+-------------------------------------------------------------
+ PostgreSQL 12.10, compiled by Visual C++ build 1914, 64-bit
+(1 row)
+
+
+postgres=# /du
+postgres-# \du
+                                   List of roles
+ Role name |                         Attributes                         | Member of
+-----------+------------------------------------------------------------+-----------
+ postgres  | Superuser, Create role, Create DB, Replication, Bypass RLS | {}
+
+
+postgres-# \list
+                                                 List of databases
+   Name    |  Owner   | Encoding |          Collate           |           Ctype            |   Access privileges
+-----------+----------+----------+----------------------------+----------------------------+-----------------------
+ postgres  | postgres | UTF8     | English_United States.1252 | English_United States.1252 |
+ template0 | postgres | UTF8     | English_United States.1252 | English_United States.1252 | =c/postgres          +
+           |          |          |                            |                            | postgres=CTc/postgres
+ template1 | postgres | UTF8     | English_United States.1252 | English_United States.1252 | =c/postgres          +
+           |          |          |                            |                            | postgres=CTc/postgres
+(3 rows)
+
+
+postgres-# create database;
+ERROR:  syntax error at or near "/"
+LINE 1: /du
+        ^
+postgres=# create database b2201;
+CREATE DATABASE
+postgres=# \list
+                                                 List of databases
+   Name    |  Owner   | Encoding |          Collate           |           Ctype            |   Access privileges
+-----------+----------+----------+----------------------------+----------------------------+-----------------------
+ b2201     | postgres | UTF8     | English_United States.1252 | English_United States.1252 |
+ postgres  | postgres | UTF8     | English_United States.1252 | English_United States.1252 |
+ template0 | postgres | UTF8     | English_United States.1252 | English_United States.1252 | =c/postgres          +
+           |          |          |                            |                            | postgres=CTc/postgres
+ template1 | postgres | UTF8     | English_United States.1252 | English_United States.1252 | =c/postgres          +
+           |          |          |                            |                            | postgres=CTc/postgres
+(4 rows)
+
+
+postgres=# \c b2201
+You are now connected to database "b2201" as user "postgres".
+b2201=# create table info_table
+b2201-# create table info_table (id integer, name VARCHAR(500));
+ERROR:  syntax error at or near "create"
+LINE 2: create table info_table (id integer, name VARCHAR(500));
+        ^
+b2201=# \dt
+Did not find any relations.
+b2201=# \t
+Tuples only is on.
+b2201=# create table info_table (id integer, name VARCHAR(500));
+CREATE TABLE
+b2201=# \dt
+ public | info_table | table | postgres
+
+
+b2201=# select * from info_table;
+
+
+b2201=# insert into info_table(id, name) values(101, 'jamal');
+INSERT 0 1
+b2201=# insert into info_table(id, name) values(102, 'rubel');
+INSERT 0 1
+b2201=# select * from info_table;
+ 101 | jamal
+ 102 | rubel
+
+
+b2201=#
